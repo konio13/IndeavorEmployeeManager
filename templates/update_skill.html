@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Skill</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #0056b3;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form div {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"], textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.2s;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .message {
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .info {
+            background-color: #e7f3fe;
+            color: #0056b3;
+            border: 1px solid #b3d9ff;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Update Skill</h1>
+
+        <div id="statusMessage" class="message info"></div>
+
+        <form id="updateSkillForm">
+            <div>
+                <label for="skillId">Skill ID:</label>
+                <input type="text" id="skillId" readonly>
+            </div>
+            <div>
+                <label for="skillName">Skill Name:</label>
+                <input type="text" id="skillName" required>
+            </div>
+            <div>
+                <label for="skillDescription">Description:</label>
+                <textarea id="skillDescription"></textarea>
+            </div>
+            <button type="submit">Save Changes</button>
+        </form>
+
+        <a href="dashboard" class="back-link">Return to Employee & Skills Manager</a>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://127.0.0.1:5000/api'; // Your Flask API URL
+        const API_KEY = 'test-api-key-123';
+        const statusMessage = document.getElementById('statusMessage');
+        const skillIdInput = document.getElementById('skillId');
+        const skillNameInput = document.getElementById('skillName');
+        const skillDescriptionTextarea = document.getElementById('skillDescription');
+
+        // --- Utility Functions ---
+        function showMessage(message, type = 'info') {
+            statusMessage.textContent = message;
+            statusMessage.className = `message ${type}`;
+        }
+
+        // --- Helper to get common headers with API Key ---
+        function getAuthHeaders() {
+            return {
+                'Content-Type': 'application/json',
+                'X-API-Key': API_KEY
+            };
+        }
+
+        // Function to get query parameters from the URL
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Fetch skill data based on ID from URL
+        async function fetchSkillDetails(id) {
+            try {
+                showMessage('Loading skill details...', 'info');
+                const response = await fetch(`${API_BASE_URL}/skills/${id}`, {
+                    headers: getAuthHeaders()
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(`HTTP error! Status: ${response.status} - ${errorData.error || response.statusText}`);
+                }
+
+                const skill = await response.json();
+                skillIdInput.value = skill.id;
+                skillNameInput.value = skill.name;
+                skillDescriptionTextarea.value = skill.description;
+                showMessage('Skill details loaded.', 'success');
+            } catch (error) {
+                console.error('Error fetching skill details:', error);
+                showMessage(`Error loading skill: ${error.message}. Ensure Flask API is running and API Key is correct.`, 'error');
+            }
+        }
+
+        // Handle form submission for updating skill
+        document.getElementById('updateSkillForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const id = skillIdInput.value;
+            const name = skillNameInput.value;
+            const description = skillDescriptionTextarea.value;
+
+            try {
+                showMessage('Saving changes...', 'info');
+                const response = await fetch(`${API_BASE_URL}/skills/${id}`, {
+                    method: 'PUT',
+                    headers: getAuthHeaders(),
+                    body: JSON.stringify({ name, description })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(`Failed to update skill: ${errorData.message || response.statusText}`);
+                }
+
+                showMessage('Skill updated successfully!', 'success');
+            } catch (error) {
+                console.error('Error updating skill:', error);
+                showMessage(`Error: ${error.message}`, 'error');
+            }
+        });
+
+        // Initial load: get skill ID from URL and fetch details
+        document.addEventListener('DOMContentLoaded', () => {
+            const skillId = getQueryParam('id');
+            if (skillId) {
+                fetchSkillDetails(skillId);
+            } else {
+                showMessage('No skill ID provided in the URL.', 'error');
+            }
+        });
+    </script>
+</body>
+</html>

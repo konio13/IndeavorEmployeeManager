@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Employee</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #0056b3;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form div {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="email"], select {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        select[multiple] {
+            height: 120px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .message {
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .info {
+            background-color: #e7f3fe;
+            color: #0056b3;
+            border: 1px solid #b3d9ff;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Update Employee</h1>
+        <div id="statusMessage" class="message info"></div>
+
+        <form id="updateEmployeeForm">
+            <div>
+                <label for="employeeId">Employee ID:</label>
+                <input type="text" id="employeeId" readonly>
+            </div>
+            <div>
+                <label for="updateName">Name:</label>
+                <input type="text" id="updateName" required>
+            </div>
+            <div>
+                <label for="updateSurname">Surname:</label>
+                <input type="text" id="updateSurname" required>
+            </div>
+            <div>
+                <label for="updateEmail">Email:</label>
+                <input type="email" id="updateEmail">
+            </div>
+            <div>
+                <label for="updateSkills">Skills (hold Ctrl/Cmd to select multiple):</label>
+                <select id="updateSkills" multiple></select>
+            </div>
+            <button type="submit">Update Employee</button>
+        </form>
+        <a href="dashboard" class="back-link">Back to Employee List</a>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://127.0.0.1:5000/api';
+        const API_KEY = 'test-api-key-123';
+
+        const employeeIdInput = document.getElementById('employeeId');
+        const updateNameInput = document.getElementById('updateName');
+        const updateSurnameInput = document.getElementById('updateSurname');
+        const updateEmailInput = document.getElementById('updateEmail');
+        const updateSkillsDropdown = document.getElementById('updateSkills');
+        const updateEmployeeForm = document.getElementById('updateEmployeeForm');
+        const statusMessage = document.getElementById('statusMessage');
+
+        function showMessage(message, type = 'info') {
+            statusMessage.textContent = message;
+            statusMessage.className = `message ${type}`;
+        }
+
+        function getAuthHeaders() {
+            return {
+                'Content-Type': 'application/json',
+                'X-API-Key': API_KEY
+            };
+        }
+
+        async function fetchEmployeeDetails(id) {
+            try {
+                showMessage('Fetching employee details...', 'info');
+                const response = await fetch(`${API_BASE_URL}/employees/${id}`, {
+                    headers: getAuthHeaders()
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(`HTTP error! Status: ${response.status} - ${errorData.error || response.statusText}`);
+                }
+
+                const employee = await response.json();
+                employeeIdInput.value = employee.id;
+                updateNameInput.value = employee.name;
+                updateSurnameInput.value = employee.surname;
+                updateEmailInput.value = employee.email;
+
+                // Populate and select skills
+                await populateSkillsDropdown(employee.skills.map(skill => skill.id));
+                showMessage('Employee details loaded.', 'success');
+            } catch (error) {
+                console.error('Error fetching employee details:', error);
+                showMessage(`Error loading employee details: ${error.message}`, 'error');
+            }
+        }
+
+        async function populateSkillsDropdown(selectedSkillIds = []) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/skills`, {
+                    headers: getAuthHeaders()
+                });
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(`HTTP error! Status: ${response.status} - ${errorData.error || response.statusText}`);
+                }
+                const skills = await response.json();
+
+                updateSkillsDropdown.innerHTML = '';
+                skills.forEach(skill => {
+                    const option = document.createElement('option');
+                    option.value = skill.id;
+                    option.textContent = skill.name;
+                    if (selectedSkillIds.includes(skill.id)) {
+                        option.selected = true;
+                    }
+                    updateSkillsDropdown.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error populating skills dropdown:', error);
+                showMessage(`Error loading skills for dropdown: ${error.message}`, 'error');
+            }
+        }
+
+        updateEmployeeForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const employeeId = employeeIdInput.value;
+            const name = updateNameInput.value;
+            const surname = updateSurnameInput.value;
+            const email = updateEmailInput.value;
+            const selectedSkills = Array.from(updateSkillsDropdown.selectedOptions)
+                                        .map(option => parseInt(option.value));
+
+            try {
+                showMessage('Updating employee...', 'info');
+                const response = await fetch(`${API_BASE_URL}/employees/${employeeId}`, {
+                    method: 'PUT',
+                    headers: getAuthHeaders(),
+                    body: JSON.stringify({ name, surname, email, skill_ids: selectedSkills })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(`Failed to update employee: ${errorData.message || response.statusText}`);
+                }
+
+                showMessage('Employee updated successfully!', 'success');
+            } catch (error) {
+                console.error('Error updating employee:', error);
+                showMessage(`Error: ${error.message}`, 'error');
+            }
+        });
+
+        // Initial load: Get employee ID from URL and fetch details
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const employeeId = params.get('id');
+
+            if (employeeId) {
+                fetchEmployeeDetails(employeeId);
+            } else {
+                showMessage('No employee ID provided in the URL.', 'error');
+            }
+        });
+    </script>
+</body>
+</html>
