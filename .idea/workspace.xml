@@ -4,36 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f4d9d144-c56d-43ea-9d7b-4384a859e0bb" name="Changes" comment="basic commits, api/pages">
-      <change afterPath="$PROJECT_DIR$/src/models/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/unit/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/unit/conftest.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/unit/test_employees.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/unit/test_skills.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/EmployeeManagementProject.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+    <list default="true" id="f4d9d144-c56d-43ea-9d7b-4384a859e0bb" name="Changes" comment="basic commits, api/pages v2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/database.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/decorators.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/decorators.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/error_handlers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/error_handlers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/employees.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/employees.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/pages.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/pages.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/skills.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/skills.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/update_employee.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/templates/update_employee.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/update_skill.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/templates/update_skill.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/employees.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/employees.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/skills.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/skills.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/unit/test_skills.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/unit/test_skills.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,6 +66,7 @@
     "Python tests.Python tests for test_skills.test_create_skill_missing_name.executor": "Run",
     "Python tests.Python tests for test_skills.test_delete_skill.executor": "Run",
     "Python tests.Python tests for test_skills.test_get_skill_by_id.executor": "Run",
+    "Python tests.Python tests for test_skills.test_get_skill_by_id_unknown.executor": "Run",
     "Python tests.Python tests for test_skills.test_get_skills_empty.executor": "Run",
     "Python tests.Python tests for test_skills.test_update_skill.executor": "Run",
     "Python tests.Python tests in test_employees.py.executor": "Run",
@@ -119,7 +95,7 @@
       <recent name="C:\Users\konio\PycharmProjects\EmployeeManagementProject\tests\unit" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.app">
+  <component name="RunManager" selected="Python tests.Python tests for test_skills.test_get_skill_by_id_unknown">
     <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="EmployeeManagementProject" />
       <option name="ENV_FILES" value="" />
@@ -164,34 +140,34 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests for tests.unit.test_employees.test_search_employee_by_skill_name" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for test_employees.test_get_employee_by_id_unknown" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="EmployeeManagementProject" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests/unit" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;tests.unit.test_employees.test_search_employee_by_skill_name&quot;" />
+      <option name="_new_target" value="&quot;test_employees.test_get_employee_by_id_unknown&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Python tests in tests" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
+    <configuration name="Python tests for test_skills.test_get_skill_by_id_unknown" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
       <module name="EmployeeManagementProject" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests/unit" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests&quot;" />
-      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <option name="_new_target" value="&quot;test_skills.test_get_skill_by_id_unknown&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
     <configuration name="Python tests in unit" type="tests" factoryName="Autodetect" temporary="true" nameIsGenerated="true">
@@ -211,11 +187,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.Python tests for test_skills.test_get_skill_by_id_unknown" />
+        <item itemvalue="Python tests.Python tests for test_employees.test_get_employee_by_id_unknown" />
         <item itemvalue="Python.app" />
         <item itemvalue="Python.pages" />
         <item itemvalue="Python tests.Python tests in unit" />
-        <item itemvalue="Python tests.Python tests in tests" />
-        <item itemvalue="Python tests.Python tests for tests.unit.test_employees.test_search_employee_by_skill_name" />
       </list>
     </recent_temporary>
   </component>

@@ -42,6 +42,10 @@ def test_get_skill_by_id(client):
     assert response.get_json()["name"] == skill.name
     assert response.get_json()["description"] == skill.description
 
+def test_get_skill_by_id_unknown(client):
+    response = client.get(f"/api/skills/1", headers=HEADERS)
+    assert response.status_code == 404
+
 def test_update_skill(client):
     skill = Skill(name="Flask-Old", description="Old desc")
     db.session.add(skill)

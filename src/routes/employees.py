@@ -18,8 +18,8 @@ def get_employees():
 @employees_bp.route('/<int:emp_id>', methods=['GET'])
 @require_api_key
 def get_employee(emp_id):
-    employee = Employee.query.get_or_404(emp_id)
-    return jsonify(employee.to_dict())
+    employee = db.session.get(Employee, emp_id)
+    return jsonify(employee.to_dict()) if employee else (jsonify({'error': 'Employee not found'}), 404)
 
 
 @employees_bp.route('/', methods=['POST'])
@@ -53,7 +53,7 @@ def create_employee():
 @employees_bp.route('/<int:emp_id>', methods=['PUT'])
 @require_api_key
 def update_employee(emp_id):
-    employee = Employee.query.get_or_404(emp_id)
+    employee = db.session.get(Employee, emp_id)
     data = request.get_json()
 
     if not data:
@@ -79,7 +79,7 @@ def update_employee(emp_id):
 @employees_bp.route('/<int:emp_id>', methods=['DELETE'])
 @require_api_key
 def delete_employee(emp_id):
-    employee = Employee.query.get_or_404(emp_id)
+    employee = db.session.get(Employee, emp_id)
     db.session.delete(employee)
     db.session.commit()
     return jsonify({'message': 'Employee deleted successfully'})
