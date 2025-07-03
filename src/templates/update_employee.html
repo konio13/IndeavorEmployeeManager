@@ -217,7 +217,7 @@
 
                 if (!response.ok) {
                     const errorData = await response.json();
-                    throw new Error(`Failed to update employee: ${errorData.message || response.statusText}`);
+                    throw new Error(`Failed to update employee: ${errorData.error || response.statusText}`);
                 }
 
                 showMessage('Employee updated successfully!', 'success');
