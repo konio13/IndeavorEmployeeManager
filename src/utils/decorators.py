@@ -1,6 +1,6 @@
 from functools import wraps
 from flask import request, jsonify
-from config import Config
+from src.config import Config
 
 
 def require_api_key(f):

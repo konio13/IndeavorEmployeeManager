@@ -1,16 +1,18 @@
-from flask import Flask, render_template
+from flask import Flask
 from flask_cors import CORS
-from config import Config
-from database import init_db
-from error_handlers import init_error_handlers
-from routes.employees import employees_bp
-from routes.pages import pages_bp
-from routes.skills import skills_bp
+from src.config import Config
+from src.database import init_db
+from src.routes.employees import employees_bp
+from src.routes.pages import pages_bp
+from src.routes.skills import skills_bp
+from src.utils.error_handlers import init_error_handlers
+
 
 def create_app():
     application = Flask(__name__)
     CORS(application)
 
+    # configuration
     application.config.from_object(Config)
 
     # pages

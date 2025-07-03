@@ -1,6 +1,8 @@
 from flask import Blueprint, request, jsonify
-from models import db, Employee, Skill
-from decorators import require_api_key
+from src.models.employee import Employee
+from src.models.skill import Skill
+from src.database import db
+from src.utils.decorators import require_api_key
 
 
 employees_bp = Blueprint('employees', __name__, url_prefix='/api/employees')
