@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, abort
 from src.models.employee import Employee
 from src.models.skill import Skill
 from src.database import db
@@ -19,7 +19,8 @@ def get_employees():
 @require_api_key
 def get_employee(emp_id):
     employee = db.session.get(Employee, emp_id)
-    return jsonify(employee.to_dict()) if employee else (jsonify({'error': 'Employee not found'}), 404)
+    return jsonify(employee.to_dict()) if employee else abort(404, description='Employee not found')
+
 
 
 @employees_bp.route('/', methods=['POST'])
@@ -28,10 +29,10 @@ def create_employee():
     data = request.get_json()
 
     if not data or not all(k in data for k in ('name', 'surname', 'email')):
-        return jsonify({'error': 'Missing required fields: name, surname, email'}), 400
+        abort(400, description='Missing required fields: name, surname, email')
 
     if Employee.query.filter_by(email=data['email']).first():
-        return jsonify({'error': 'Employee with this email already exists'}), 400
+        abort(400, description='Employee with this email already exists')
 
     employee = Employee(
         name=data['name'],
@@ -65,7 +66,8 @@ def update_employee(emp_id):
         employee.surname = data['surname']
     if 'email' in data:
         if Employee.query.filter_by(email=data['email']).filter(Employee.id != emp_id).first():
-            return jsonify({'error': 'Employee with this email already exists'}), 400
+            abort(400, description='Employee with this email already exists')
+
         employee.email = data['email']
 
     if 'skill_ids' in data:

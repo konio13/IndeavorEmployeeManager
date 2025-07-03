@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, abort
 
 from src.database import db
 from src.models.skill import Skill
@@ -27,10 +27,10 @@ def create_skill():
     data = request.get_json()
 
     if not data or 'name' not in data:
-        return jsonify({'error': 'Missing required field: name'}), 400
+        abort(400, description='Missing required field: name')
 
     if Skill.query.filter_by(name=data['name']).first():
-        return jsonify({'error': 'Skill with this name already exists'}), 400
+        abort(400, description='Skill with this name already exists')
 
     skill = Skill(
         name=data['name'],
@@ -50,11 +50,12 @@ def update_skill(skill_id):
     data = request.get_json()
 
     if not data:
-        return jsonify({'error': 'No data provided'}), 400
+        abort(400, description='No data provided')
+
 
     if 'name' in data:
         if Skill.query.filter_by(name=data['name']).filter(Skill.id != skill_id).first():
-            return jsonify({'error': 'Skill with this name already exists'}), 400
+            abort(400, description='Skill with this name already exists')
         skill.name = data['name']
 
     if 'description' in data:

@@ -1,3 +1,7 @@
+import re
+
+from sqlalchemy.orm import validates
+
 from src.database import db
 
 employee_skills = db.Table('employee_skills',
@@ -12,6 +16,22 @@ class Employee(db.Model):
     surname = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     skills = db.relationship('Skill', secondary=employee_skills, backref='employees')
+
+    @validates('name', 'surname')
+    def validate_name_surname(self, key, value):
+        if len(value) > 100:
+            raise ValueError(key + " cannot exceed 100 characters")
+        return value
+
+    @validates('email')
+    def validate_email(self, key, value):
+        email_regex = r'^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'
+        if not re.match(email_regex, value):
+            raise ValueError("invalid email format")
+        if len(value) > 120:
+            raise ValueError("email cannot exceed 120 characters")
+        return value
+
 
     def to_dict(self):
         return {

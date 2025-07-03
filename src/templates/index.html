@@ -225,7 +225,7 @@
 
                 if (!response.ok) {
                     const errorData = await response.json();
-                    throw new Error(`HTTP error! Status: ${response.status} - ${errorData.error || response.statusText}`);
+                    throw new Error(`HTTP error! Status: ${response.status} - ${errorData.message || response.statusText}`);
                 }
 
                 const employees = await response.json();
@@ -277,7 +277,7 @@
                 });
                 if (!response.ok) {
                     const errorData = await response.json();
-                    throw new Error(`HTTP error! Status: ${response.status} - ${errorData.error || response.statusText}`);
+                    throw new Error(`HTTP error! Status: ${response.status} - ${errorData.message || response.statusText}`);
                 }
                 const skills = await response.json();
 
@@ -343,7 +343,7 @@
 
                 if (!response.ok) {
                     const errorData = await response.json();
-                    throw new Error(`Failed to create employee: ${errorData.error || response.statusText}`);
+                    throw new Error(`Failed to create employee: ${errorData.message || response.statusText}`);
                 }
 
                 document.getElementById('createEmployeeForm').reset();
@@ -400,7 +400,7 @@
 
                 if (!response.ok) {
                     const errorData = await response.json();
-                    throw new Error(`Failed to create skill: ${errorData.error || response.statusText}`);
+                    throw new Error(`Failed to create skill: ${errorData.message || response.statusText}`);
                 }
 
                 document.getElementById('createSkillForm').reset();

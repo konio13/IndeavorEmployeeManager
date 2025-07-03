@@ -181,7 +181,7 @@
 
                 if (!response.ok) {
                     const errorData = await response.json();
-                    throw new Error(`Failed to update skill: ${errorData.error || response.statusText}`);
+                    throw new Error(`Failed to update skill: ${errorData.message || response.statusText}`);
                 }
 
                 showMessage('Skill updated successfully!', 'success');

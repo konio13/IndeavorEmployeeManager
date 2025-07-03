@@ -153,7 +153,7 @@
 
                 if (!response.ok) {
                     const errorData = await response.json();
-                    throw new Error(`HTTP error! Status: ${response.status} - ${errorData.error || response.statusText}`);
+                    throw new Error(`HTTP error! Status: ${response.status} - ${errorData.message || response.statusText}`);
                 }
 
                 const employee = await response.json();
@@ -178,7 +178,7 @@
                 });
                 if (!response.ok) {
                     const errorData = await response.json();
-                    throw new Error(`HTTP error! Status: ${response.status} - ${errorData.error || response.statusText}`);
+                    throw new Error(`HTTP error! Status: ${response.status} - ${errorData.message || response.statusText}`);
                 }
                 const skills = await response.json();
 
@@ -217,7 +217,7 @@
 
                 if (!response.ok) {
                     const errorData = await response.json();
-                    throw new Error(`Failed to update employee: ${errorData.error || response.statusText}`);
+                    throw new Error(`Failed to update employee: ${errorData.message || response.statusText}`);
                 }
 
                 showMessage('Employee updated successfully!', 'success');
