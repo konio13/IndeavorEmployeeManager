@@ -22,7 +22,6 @@ def get_employee(emp_id):
     return jsonify(employee.to_dict()) if employee else abort(404, description='Employee not found')
 
 
-
 @employees_bp.route('/', methods=['POST'])
 @require_api_key
 def create_employee():
