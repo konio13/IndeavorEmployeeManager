@@ -185,6 +185,19 @@
           }
         }
       },
+      "EmployeeInput": {
+        "type": "object",
+        "properties": {
+          "name": {"type": "string"},
+          "surname": {"type": "string"},
+          "email": {"type": "string"},
+          "skill_ids": {
+            "type": "array",
+            "items": {"type": "integer"}
+          }
+        },
+        "required": ["name", "surname", "email"]
+      },
       "Skill": {
         "type": "object",
         "properties": {
@@ -192,6 +205,14 @@
           "name": {"type": "string"},
           "description": {"type": "string"}
         }
+      },
+      "SkillInput": {
+        "type": "object",
+        "properties": {
+          "name": {"type": "string"},
+          "description": {"type": "string"}
+        },
+        "required": ["name"]
       }
     }
   }
