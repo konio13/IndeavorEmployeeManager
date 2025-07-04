@@ -1,0 +1,197 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "EmployeeManagement API",
+      "version": "1.0.0"
+    },
+    "paths": {
+      "/api/employees/": {
+        "get": {
+          "description": "Returns all employees",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful operation",
+              "schema": {"type": "array", "items": {"$ref": "#/definitions/Employee"}}
+            }
+          }
+        },
+        "post": {
+          "description": "Create a new employee",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {"name": "body", "in": "body", "required": true, "schema": {"$ref": "#/definitions/EmployeeInput"}}
+          ],
+          "responses": {
+            "201": {"description": "Employee created", "schema": {"$ref": "#/definitions/Employee"}},
+            "400": {"description": "Invalid input"}
+          }
+        }
+      },
+      "/api/employees/{emp_id}": {
+        "get": {
+          "description": "Retrieve an employee by ID",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {"name": "emp_id", "in": "path", "type": "integer", "required": true, "description": "Employee ID"}
+          ],
+          "responses": {
+            "200": {"description": "Employee info", "schema": {"$ref": "#/definitions/Employee"}},
+            "404": {"description": "Employee not found"}
+          }
+        },
+        "put": {
+          "description": "Update an employee",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {"name": "emp_id", "in": "path", "type": "integer", "required": true},
+            {"name": "body", "in": "body", "required": true, "schema": {"$ref": "#/definitions/EmployeeInput"}}
+          ],
+          "responses": {
+            "200": {"description": "Employee updated", "schema": {"$ref": "#/definitions/Employee"}},
+            "400": {"description": "Invalid input"},
+            "404": {"description": "Employee not found"}
+          }
+        },
+        "delete": {
+          "description": "Delete an employee",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {"name": "emp_id", "in": "path", "type": "integer", "required": true}
+          ],
+          "responses": {
+            "200": {"description": "Employee deleted"},
+            "404": {"description": "Employee not found"}
+          }
+        }
+      },
+      "/api/employees/search": {
+        "get": {
+          "description": "Search employees by name, surname, or skill",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {"name": "name", "in": "query", "type": "string", "required": false},
+            {"name": "surname", "in": "query", "type": "string", "required": false},
+            {"name": "skill", "in": "query", "type": "string", "required": false}
+          ],
+          "responses": {
+            "200": {"description": "Search results", "schema": {"type": "array", "items": {"$ref": "#/definitions/Employee"}}}
+          }
+        }
+      },
+      "/api/skills/": {
+        "get": {
+          "description": "Returns all skills",
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {"description": "Successful operation", "schema": {"type": "array", "items": {"$ref": "#/definitions/Skill"}}}
+          }
+        },
+        "post": {
+          "description": "Create a new skill",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {"name": "body", "in": "body", "required": true, "schema": {"$ref": "#/definitions/SkillInput"}}
+          ],
+          "responses": {
+            "201": {"description": "Skill created", "schema": {"$ref": "#/definitions/Skill"}},
+            "400": {"description": "Invalid input"}
+          }
+        }
+      },
+      "/api/skills/{skill_id}": {
+        "get": {
+          "description": "Retrieve a skill by ID",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {"name": "skill_id", "in": "path", "type": "integer", "required": true, "description": "Skill ID"}
+          ],
+          "responses": {
+            "200": {"description": "Skill info", "schema": {"$ref": "#/definitions/Skill"}},
+            "404": {"description": "Skill not found"}
+          }
+        },
+        "put": {
+          "description": "Update a skill",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {"name": "skill_id", "in": "path", "type": "integer", "required": true},
+            {"name": "body", "in": "body", "required": true, "schema": {"$ref": "#/definitions/SkillInput"}}
+          ],
+          "responses": {
+            "200": {"description": "Skill updated", "schema": {"$ref": "#/definitions/Skill"}},
+            "400": {"description": "Invalid input"},
+            "404": {"description": "Skill not found"}
+          }
+        },
+        "delete": {
+          "description": "Delete a skill",
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {"name": "skill_id", "in": "path", "type": "integer", "required": true}
+          ],
+          "responses": {
+            "200": {"description": "Skill deleted"},
+            "404": {"description": "Skill not found"}
+          }
+        }
+      }
+    },
+    "definitions": {
+      "Employee": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "integer"},
+          "name": {"type": "string"},
+          "surname": {"type": "string"},
+          "email": {"type": "string"},
+          "skills": {
+            "type": "array",
+            "items": {"$ref": "#/definitions/Skill"}
+          }
+        }
+      },
+      "Skill": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "integer"},
+          "name": {"type": "string"},
+          "description": {"type": "string"}
+        }
+      }
+    }
+  }
