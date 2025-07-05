@@ -62,7 +62,7 @@
             {"name": "body", "in": "body", "required": true, "schema": {"$ref": "#/definitions/EmployeeInput"}}
           ],
           "responses": {
-            "200": {"description": "Employee updated", "schema": {"$ref": "#/definitions/Employee"}},
+            "200": {"description": "", "schema": {"$ref": "#/definitions/Employee"}},
             "400": {"description": "Invalid input"},
             "404": {"description": "Employee not found"}
           }
@@ -76,7 +76,7 @@
             {"name": "emp_id", "in": "path", "type": "integer", "required": true}
           ],
           "responses": {
-            "200": {"description": "Employee deleted"},
+            "200": {"description": "Employee deleted successfully"},
             "404": {"description": "Employee not found"}
           }
         }
@@ -151,7 +151,7 @@
             {"name": "body", "in": "body", "required": true, "schema": {"$ref": "#/definitions/SkillInput"}}
           ],
           "responses": {
-            "200": {"description": "Skill updated", "schema": {"$ref": "#/definitions/Skill"}},
+            "200": {"description": "", "schema": {"$ref": "#/definitions/Skill"}},
             "400": {"description": "Invalid input"},
             "404": {"description": "Skill not found"}
           }

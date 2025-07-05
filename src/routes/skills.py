@@ -18,7 +18,7 @@ def get_skills():
 @require_api_key
 def get_skill(skill_id):
     skill = db.session.get(Skill, skill_id)
-    return jsonify(skill.to_dict()) if skill else (jsonify({'error': 'Skill not found'}), 404)
+    return jsonify(skill.to_dict()) if skill else abort(404, description='Skill not found')
 
 
 @skills_bp.route('/', methods=['POST'])
@@ -49,6 +49,8 @@ def update_skill(skill_id):
     skill = db.session.get(Skill, skill_id)
     data = request.get_json()
 
+    if not skill:
+        abort(404, description='Skill not found')
     if not data:
         abort(400, description='No data provided')
 
@@ -69,6 +71,10 @@ def update_skill(skill_id):
 @require_api_key
 def delete_skill(skill_id):
     skill = db.session.get(Skill, skill_id)
+
+    if not skill:
+        abort(404, description='Skill not found')
+
     db.session.delete(skill)
     db.session.commit()
     return jsonify({'message': 'Skill deleted successfully'})

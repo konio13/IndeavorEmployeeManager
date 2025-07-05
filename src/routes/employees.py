@@ -56,8 +56,11 @@ def update_employee(emp_id):
     employee = db.session.get(Employee, emp_id)
     data = request.get_json()
 
+    if not employee:
+        abort(404, description='Employee not found')
+
     if not data:
-        return jsonify({'error': 'No data provided'}), 400
+        abort(400, description='No data provided')
 
     if 'name' in data:
         employee.name = data['name']
@@ -66,7 +69,6 @@ def update_employee(emp_id):
     if 'email' in data:
         if Employee.query.filter_by(email=data['email']).filter(Employee.id != emp_id).first():
             abort(400, description='Employee with this email already exists')
-
         employee.email = data['email']
 
     if 'skill_ids' in data:
@@ -81,6 +83,10 @@ def update_employee(emp_id):
 @require_api_key
 def delete_employee(emp_id):
     employee = db.session.get(Employee, emp_id)
+
+    if not employee:
+        abort(404, description='Employee not found')
+
     db.session.delete(employee)
     db.session.commit()
     return jsonify({'message': 'Employee deleted successfully'})
