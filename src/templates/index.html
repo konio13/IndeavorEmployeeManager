@@ -145,7 +145,7 @@
                 <label for="employeeSkills">Skills (hold Ctrl/Cmd to select multiple):</label>
                 <select id="employeeSkills" multiple></select>
             </div>
-            <button type="submit">Create Employee</button>
+            <button type="submit" id="btn-submit-employee">Create Employee</button>
         </form>
 
         <h2>Employees</h2>
@@ -173,7 +173,7 @@
                 <label for="skillDescription">Description:</label>
                 <textarea id="skillDescription"></textarea>
             </div>
-            <button type="submit">Create Skill</button>
+            <button type="submit" id="btn-submit-skill">Create Skill</button>
         </form>
 
         <h2>Skills</h2>
@@ -218,7 +218,7 @@
 
         async function fetchEmployees() {
             try {
-                showMessage('Fetching employees...', 'info');
+                //showMessage('Fetching employees...', 'info');
                 const response = await fetch(`${API_BASE_URL}/employees`, {
                     headers: getAuthHeaders()
                 });
@@ -231,22 +231,30 @@
                 const employees = await response.json();
 
                 employeesTableBody.innerHTML = ''; // Clear existing rows
-                if (employees.length === 0) {
-                    showMessage('No employees found.', 'info');
-                } else {
-                    showMessage(''); // Clear status message if data found
-                }
+                //if (employees.length === 0) {
+                //    showMessage('No employees found.', 'info');
+                //} else {
+                //    showMessage(''); // Clear status message if data found
+                //}
 
                 employees.forEach(employee => {
                     const row = employeesTableBody.insertRow();
-                    row.insertCell(0).textContent = employee.id;
+					row.id = `employee-row-${employee.id}`;
+					
+					const employeeId = row.insertCell(0);
+					employeeId.textContent = employee.id;
+					employeeId.id = `employee-id`;
+					
                     const fullNameCell = row.insertCell(1);
                     const employeeLink = document.createElement('a');
                     employeeLink.href = `update_employee?id=${employee.id}`;
                     employeeLink.textContent = `${employee.name} ${employee.surname}`;
+					employeeLink.id = `employee-link`;
                     fullNameCell.appendChild(employeeLink);
 
-                    row.insertCell(2).textContent = employee.email;
+					const emailCell = row.insertCell(2);
+					emailCell.textContent = employee.email;
+					emailCell.id = `employee-email`;
 
                     const skillsCell = row.insertCell(3);
                     if (employee.skills && employee.skills.length > 0) {
@@ -254,11 +262,13 @@
                     } else {
                         skillsCell.textContent = 'No skills';
                     }
+					skillsCell.id = `employee-skills`;
 
                     const actionsCell = row.insertCell(4);
                     const deleteBtn = document.createElement('button');
                     deleteBtn.textContent = 'Delete';
                     deleteBtn.classList.add('delete-btn');
+					deleteBtn.id = `delete-btn`; 
                     deleteBtn.onclick = () => deleteEmployee(employee.id);
                     actionsCell.appendChild(deleteBtn);
                 });
@@ -271,7 +281,7 @@
 
         async function fetchSkills() {
             try {
-                showMessage('Fetching skills...', 'info');
+                //showMessage('Fetching skills...', 'info');
                 const response = await fetch(`${API_BASE_URL}/skills`, {
                     headers: getAuthHeaders()
                 });
@@ -282,21 +292,23 @@
                 const skills = await response.json();
 
                 skillsTableBody.innerHTML = ''; // Clear existing rows
-                if (skills.length === 0) {
-                    showMessage('No skills found.', 'info');
-                } else {
-                    showMessage(''); // Clear status message if data found
-                }
+                //if (skills.length === 0) {
+                //    showMessage('No skills found.', 'info');
+                //} else {
+                //    showMessage(''); // Clear status message if data found
+                //}
 
                 // Also populate the employee skills dropdown
                 employeeSkillsDropdown.innerHTML = '';
                 skills.forEach(skill => {
                     const row = skillsTableBody.insertRow();
+					row.id = `skill-row-${skill.id}`;
                     row.insertCell(0).textContent = skill.id;
                     const skillNameCell = row.insertCell(1);
                     const skillLink = document.createElement('a');
                     skillLink.href = `update_skill?id=${skill.id}`;
                     skillLink.textContent = skill.name;
+					skillLink.id = `skill-link`;
                     skillNameCell.appendChild(skillLink);
 
                     row.insertCell(2).textContent = skill.description;
@@ -305,6 +317,7 @@
                     const deleteBtn = document.createElement('button');
                     deleteBtn.textContent = 'Delete';
                     deleteBtn.classList.add('delete-btn');
+					deleteBtn.id = `delete-btn`;
                     deleteBtn.onclick = () => deleteSkill(skill.id);
                     actionsCell.appendChild(deleteBtn);
 
@@ -424,14 +437,14 @@
                     headers: getAuthHeaders()
                 });
 
-                if (response.status === 204) {
-                    showMessage('Skill deleted successfully!', 'success');
-                    await fetchSkills();
-                    await fetchEmployees(); // Refresh employee list to reflect skill removal
-                } else if (response.ok) {
+                if (response.ok) {
                     showMessage('Skill deleted successfully!', 'success');
                     await fetchSkills();
                     await fetchEmployees();
+                //} else if (response.ok) {
+                //    showMessage('Skill deleted successfully!', 'success');
+                //    await fetchSkills();
+                //    await fetchEmployees();
                 }
                 else {
                     const errorData = await response.json();

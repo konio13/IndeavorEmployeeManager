@@ -20,7 +20,9 @@ class Employee(db.Model):
     @validates('name', 'surname')
     def validate_name_surname(self, key, value):
         if len(value) > 100:
-            raise ValueError(key + " cannot exceed 100 characters")
+            raise ValueError(f"{key} cannot exceed 100 characters")
+        if not value or not value.strip():
+            raise ValueError(f"{key} must not be empty or whitespace")
         return value
 
     @validates('email')
