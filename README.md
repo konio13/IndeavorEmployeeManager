@@ -1,4 +1,4 @@
-# Indeavor - EmployeeManagement Demo
+# Indeavor - EmployeeManagementApp Demo
 
 **EmployeeManagement** is a custom-made Python Flask application demonstrating employee and skill management using SQLAlchemy ORM with extensible architecture.
 
@@ -19,7 +19,7 @@
 ### 1. Clone the Project
 
 ```
-git clone https://github.com/konio13/IndeavorEmployeeManager
+git clone https://github.com/konio13/IndeavorEmployeeManagerApp
 ````
 
 ### 2. Create & Activate Virtual Environment
