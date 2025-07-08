@@ -23,7 +23,7 @@ def test_create_skill_missing_name(client):
     response = client.post("/api/skills/", json={}, headers=HEADERS)
     assert response.status_code == 400
     assert "error" in response.get_json()
-    assert "Missing required field: name" in response.get_json()["error"]
+    assert "Missing required field: name" in response.get_json()["message"]
 
 def test_create_skill_missing_description(client):
     data = {"name": "Java"}

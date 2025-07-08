@@ -34,7 +34,7 @@ def test_create_employee_missing_name(client):
     response = client.post("/api/employees/", json=data, headers=HEADERS)
     assert response.status_code == 400
     assert "error" in response.get_json()
-    assert "Missing required fields: name, surname, email" in response.get_json()["error"]
+    assert "Missing required fields: name, surname, email" in response.get_json()["message"]
 
 def test_create_employee_missing_surname(client):
     data = {
@@ -45,7 +45,7 @@ def test_create_employee_missing_surname(client):
     response = client.post("/api/employees/", json=data, headers=HEADERS)
     assert response.status_code == 400
     assert "error" in response.get_json()
-    assert "Missing required fields: name, surname, email" in response.get_json()["error"]
+    assert "Missing required fields: name, surname, email" in response.get_json()["message"]
 
 def test_create_employee_missing_email(client):
     data = {
@@ -56,7 +56,7 @@ def test_create_employee_missing_email(client):
     response = client.post("/api/employees/", json=data, headers=HEADERS)
     assert response.status_code == 400
     assert "error" in response.get_json()
-    assert "Missing required fields: name, surname, email" in response.get_json()["error"]
+    assert "Missing required fields: name, surname, email" in response.get_json()["message"]
 
 def test_create_employee_missing_skills(client):
     data = {
