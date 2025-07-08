@@ -1,6 +1,6 @@
-# Indeavor - EmployeeManagementApp Demo
+# IndeavorEmployeeManagerApp Demo
 
-**EmployeeManagement** is a custom-made Python Flask application demonstrating employee and skill management using SQLAlchemy ORM with extensible architecture.
+**IndeavorEmployeeManagerApp** is a custom-made Python Flask application demonstrating employee and skill management using SQLAlchemy ORM with extensible architecture.
 
 ---
 
